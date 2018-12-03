@@ -14,6 +14,7 @@ namespace A06_SendData {
     function handleListen(): void {
         console.log("Listening");
     }
+    
 
     function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
         console.log("I hear voices!");
@@ -23,7 +24,7 @@ namespace A06_SendData {
 
         _response.write(_request.url);
         console.log(_request.url);
-        
+
         _response.end();
     }
 }
