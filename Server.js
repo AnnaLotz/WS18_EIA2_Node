@@ -1,5 +1,6 @@
 "use strict";
 const Http = require("http");
+const Url = require("url");
 var A06_SendData;
 (function (A06_SendData) {
     console.log("Starting server");
@@ -14,12 +15,21 @@ var A06_SendData;
         console.log("Listening");
     }
     function handleRequest(_request, _response) {
-        console.log("I hear voices!");
-        _response.setHeader("content-type", "text/html; charset=utf-8");
-        _response.setHeader("Access-Control-Allow-Origin", "*");
-        _response.write(_request.url);
-        console.log(_request.url);
-        _response.end();
+        if (_request.url != "/favicon.ico") {
+            console.log("I hear voices!");
+            _response.setHeader("content-type", "text/html; charset=utf-8");
+            _response.setHeader("Access-Control-Allow-Origin", "*");
+            //            _response.write("requestUrl: " + _request.url);
+            let query = Url.parse(_request.url, true).query;
+            console.log("requestUrl: " + _request.url);
+            console.log(query);
+            for (let key in query) {
+                let product = query[key];
+                console.log(key + ": " + product.toString());
+                _response.write(key + " = " + product.toString() + "<br>");
+            }
+            _response.end();
+        }
     }
 })(A06_SendData || (A06_SendData = {}));
 //# sourceMappingURL=Server.js.map

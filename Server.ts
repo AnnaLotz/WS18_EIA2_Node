@@ -1,6 +1,12 @@
 import * as Http from "http";
+import * as Url from "url";
 
 namespace A06_SendData {
+
+    interface AssocProd {
+        [key: string]: string;
+    }
+
     console.log("Starting server");
     let port: number = process.env.PORT;
     if (port == undefined)
@@ -14,17 +20,33 @@ namespace A06_SendData {
     function handleListen(): void {
         console.log("Listening");
     }
-    
+
 
     function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
-        console.log("I hear voices!");
+        if (_request.url != "/favicon.ico") {
 
-        _response.setHeader("content-type", "text/html; charset=utf-8");
-        _response.setHeader("Access-Control-Allow-Origin", "*");
+            console.log("I hear voices!");
 
-        _response.write(_request.url);
-        console.log(_request.url);
+            _response.setHeader("content-type", "text/html; charset=utf-8");
+            _response.setHeader("Access-Control-Allow-Origin", "*");
 
-        _response.end();
+//            _response.write("requestUrl: " + _request.url);
+
+
+            let query: AssocProd = Url.parse(_request.url, true).query;
+
+            console.log("requestUrl: " + _request.url);
+            console.log(query);
+
+            for (let key in query) {
+                let product: string = query[key];
+                console.log(key + ": " + product.toString());
+                _response.write(key + " = " + product.toString() + "<br>");
+            }
+
+
+
+            _response.end();
+        }
     }
 }
