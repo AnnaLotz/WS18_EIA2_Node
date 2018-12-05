@@ -32,7 +32,6 @@ namespace A06_SendData {
 
 //            _response.write("requestUrl: " + _request.url);
 
-
             let query: AssocProd = Url.parse(_request.url, true).query;
 
             console.log("requestUrl: " + _request.url);
@@ -43,7 +42,6 @@ namespace A06_SendData {
                 console.log(key + ": " + product.toString());
                 _response.write(key + " = " + product.toString() + "<br>");
             }
-
 
 
             _response.end();
