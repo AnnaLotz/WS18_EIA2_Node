@@ -30,8 +30,6 @@ namespace A06_SendData {
             _response.setHeader("content-type", "text/html; charset=utf-8");
             _response.setHeader("Access-Control-Allow-Origin", "*");
 
-//            _response.write("requestUrl: " + _request.url);
-
             let query: AssocProd = Url.parse(_request.url, true).query;
 
             console.log("requestUrl: " + _request.url);
@@ -39,12 +37,12 @@ namespace A06_SendData {
 
             for (let key in query) {
                 let product: string = query[key];
-                console.log(key + ": " + product.toString());
+                console.log(key + "= " + product.toString());
                 _response.write(key + " = " + product.toString() + "<br>");
             }
 
 
             _response.end();
         }
-    }
-}
+    } //close handleRequest
+} //close Namespace
